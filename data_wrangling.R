@@ -1,11 +1,14 @@
-#script to manipulate gene expression data
+#script to clean and reshape gene expression data (GSE183947) into a tidy table
 #load libraries
 library(dplyr)
 library(tidyverse)
 library (GEOquery)
 
 #read in the data
-dat <- read.csv(file = "../Desktop/demo/GSE183947_fpkm.csv")
+# run fetch_data.R first -- it downloads this file straight from GEO's
+# supplementary files, so this path works on any machine, not just the
+# one that originally ran the analysis.
+dat <- read.csv(file = "data/GSE183947_fpkm.csv")
 dim(dat)
 
 # get metadata
@@ -21,8 +24,8 @@ metadata.modified <- metadata %>%
   select(1,10,11,17)%>%
   rename(tissue = characteristics_ch1) %>%
   rename(metastasis = characteristics_ch1.1) %>%
-  mutate(tissue=gsub("tissue:","", tissue)) %>% 
-  mutate(metastasis=gsub("metastasis:","", metastasis))
+  mutate(tissue=trimws(gsub("tissue:","", tissue))) %>%
+  mutate(metastasis=trimws(gsub("metastasis:","", metastasis)))
 
 head(dat)
 
@@ -44,8 +47,10 @@ dat.long %>%
   summarise(mean_FPKM = mean(FPKM),
            median_FPKM = median(FPKM)) %>%
   arrange(-mean_FPKM)
-  
 
-
+#save the tidy long-format table so data_visualization.R (or anything else)
+#can pick it up without needing this script's R session in memory
+write.csv(dat.long, "data/dat_long.csv", row.names = FALSE)
+cat("Wrote data/dat_long.csv (", nrow(dat.long), "rows )\n")
 
   
