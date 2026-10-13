@@ -35,7 +35,7 @@ This project takes real public RNA-seq data from NCBI GEO, cleans and reshapes i
 
 <img src="heatmap_scaled.png" width="750">
 
-**Conclusion.** *BRCA1* tends to be modestly higher in tumour tissue, with substantial overlap between groups. These are exploratory patterns, not statistically tested results; formal differential expression analysis is demonstrated in my [DESeq2 project](https://github.com/Sayali-k28/DSeq2_project).
+**Conclusion.** *BRCA1* tends to be modestly higher in tumour tissue, with substantial overlap between groups. These are exploratory patterns, not statistically tested results.
 
 ## Files
 
