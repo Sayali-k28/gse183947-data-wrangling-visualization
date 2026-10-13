@@ -41,7 +41,9 @@ brca_wide <- dat.long %>%
 # things move together. Near 0 means "not much relationship."
 correlation <- cor(brca_wide$BRCA1, brca_wide$BRCA2)
 correlation <- round(correlation, 2)
-cat("BRCA1 vs BRCA2 correlation:", correlation, "\n")
+cat("BRCA1 vs BRCA2 correlation (Pearson):", correlation, "\n")
+cat("BRCA1 vs BRCA2 correlation (Spearman):",
+    round(cor(brca_wide$BRCA1, brca_wide$BRCA2, method = "spearman"), 2), "\n")
 
 scatter_plot <- ggplot(brca_wide, aes(x = BRCA1, y = BRCA2, colour = tissue)) +
   geom_point() +
